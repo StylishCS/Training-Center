@@ -17,7 +17,14 @@ mongoose
   .catch((err) => console.error("MongoDB Connection Failed..", err));
 
 var app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: ["*"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
