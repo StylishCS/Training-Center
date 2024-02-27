@@ -19,9 +19,7 @@ mongoose
 var app = express();
 app.use(
   cors({
-    origin: ["*"],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "*",
     credentials: true,
   })
 );
