@@ -86,27 +86,6 @@ async function userSignupController(req, res) {
   }
 }
 
-async function userLoginController(req, res) {
-  try {
-    if (!req.body.email || !req.body.password) {
-      return res.status(400).json("Please Provide a valid email and password");
-    }
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      return res.status(404).json("User Not Found");
-    }
-    const valid = bcrypt.compare(req.body.password, user.password);
-    if (!valid) {
-      return res.status(401).json("Wrong Email or Password");
-    }
-    if (!user.verified) {
-      return res.status(401).json("Your Account Must Be Verified First");
-    }
-    return res.status(200).json(user);
-  } catch (error) {
-    return res.status(500).json("INTERNAL SERVER ERROR");
-  }
-}
 
 async function resendOTP(req, res) {
   try {
@@ -268,7 +247,7 @@ async function loginController(req, res) {
     await transporter.sendMail(message).catch((err) => {
       throw err;
     });
-    res.status(201).json({ msg: "code sent..", token: token });
+    res.status(200).json({ msg: "code sent..", token: token });
   } catch (error) {
     return res.status(500).json("INTERNAL SERVER ERROR");
   }
@@ -305,7 +284,6 @@ async function verifyLogin(req, res) {
 
 module.exports = {
   userSignupController,
-  userLoginController,
   resendOTP,
   verifyUser,
   loginController,
