@@ -38,6 +38,7 @@ async function userSignupController(req, res) {
       createdAt: Number(d1),
       expiresAt: Number(d2),
     });
+    await OTP.deleteMany({email: req.body.email});
     await otpObj.save();
     const data = {
       name: user.name,
